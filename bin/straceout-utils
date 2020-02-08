@@ -5,6 +5,8 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
+use StraceOutUtils\Command;
 
 $application = new Application('straceout-utils', '0.1.0');
+$application->add(new Command\Process());
 $application->run();
