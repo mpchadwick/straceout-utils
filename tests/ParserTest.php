@@ -32,5 +32,10 @@ class ParserTest extends TestCase
         $parts = $parser->parse($line);
         $this->assertEquals($parts['call'], 'poll');
         $this->assertEquals($parts['args'], '[{fd=3, events=POLLIN|POLLERR|POLLHUP}], 1, 86400000');
+
+        $line = 'access("/var/www/magento-2-3-4-ee/vendor/composer/../../lib/internal/Magento/Framework/DB/Select.php", F_OK) = -1 ENOENT (No such file or directory)';
+        $parts = $parser->parse($line);
+        $this->assertEquals($parts['call'], 'access');
+        $this->assertEquals($parts['args'], '"/var/www/magento-2-3-4-ee/vendor/composer/../../lib/internal/Magento/Framework/DB/Select.php", F_OK');
     }
 }
