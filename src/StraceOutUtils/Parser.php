@@ -7,18 +7,14 @@ class Parser
     /**
      * Parse a line from strace out into parts
      *
-     * [
-     *     'call' => '',
-     *     'args' => '',
-     *     'return' => ''
-     * ]
-     * @param  [type] $line [description]
-     * @return [type]       [description]
+     * - call: The syscall
+     * - args: Arguments it was passed
      */
     public function parse($line)
     {
         $parts = [];
         $parts['call'] = $this->extractCall($line);
+        $parts['args'] = $this->extractArgs($line);
 
         return $parts;
     }
@@ -38,5 +34,13 @@ class Parser
         $subParts = explode(' ', $parts[0]);
 
         return end($subParts);
+    }
+
+    private function extractArgs($line)
+    {
+        $start = strpos($line, '(') + 1;
+        $end = strrpos($line, ')');
+
+        return substr($line, $start, $end - $start);
     }
 }
