@@ -6,6 +6,7 @@ use StraceOutUtils\Parser;
 use StraceOutUtils\Processor\MysqlQueryResult;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Process extends Command
@@ -24,27 +25,31 @@ class Process extends Command
         parent::configure();
         $this
             ->setName('process')
-            ->setDescription('Process the strace out');
+            ->setDescription('Process the strace out')
+            ->addArgument('file', InputArgument::REQUIRED, 'File with strace out');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $parser = new Parser;
-        while ($line = fgets(STDIN)) {
+        $fp = fopen($input->getArgument('file'), 'r');
+        if (!$fp) {
+            throw new \Exception('Could not open file');
+        }
+        while (($line = fgets($fp)) !== false) {
+            $line = trim($line);
             $parts = $parser->parse($line);
             foreach ($this->processors as $processor) {
                 $result = $processor->process($parts);
 
                 if ($result) {
-                    echo PHP_EOL;
-                    echo ' -- Begin: HIT ---' . PHP_EOL;
-                    echo $result . PHP_EOL;
-                    echo ' -- End: HIT ---' . PHP_EOL;
-                    echo PHP_EOL;
+                    $output->writeln('-- Begin -- ' . get_class($processor));
+                    $output->writeln($result);
+                    $output->writeln('-- End -- ' . get_class($processor));
                 }
             }
 
-            echo $line;
+            $output->writeln($line);
         }
 
         return 0;
