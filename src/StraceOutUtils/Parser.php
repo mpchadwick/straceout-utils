@@ -39,7 +39,10 @@ class Parser
     private function extractArgs($line)
     {
         $start = strpos($line, '(') + 1;
-        $end = strrpos($line, ')');
+        $end = strrpos($line, ') = ');
+        if ($end === false) {
+            $end = strrpos($line, ')');
+        }
 
         return substr($line, $start, $end - $start);
     }

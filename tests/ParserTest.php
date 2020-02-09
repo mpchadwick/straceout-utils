@@ -27,5 +27,10 @@ class ParserTest extends TestCase
         $parts = $parser->parse($line);
         $this->assertEquals($parts['call'], 'fstat');
         $this->assertEquals($parts['args'], '3, {st_mode=S_IFREG|0755, st_size=41080, ...}');
+
+        $line = 'poll([{fd=3, events=POLLIN|POLLERR|POLLHUP}], 1, 86400000) = 1 ([{fd=3, revents=POLLIN}])';
+        $parts = $parser->parse($line);
+        $this->assertEquals($parts['call'], 'poll');
+        $this->assertEquals($parts['args'], '[{fd=3, events=POLLIN|POLLERR|POLLHUP}], 1, 86400000');
     }
 }
