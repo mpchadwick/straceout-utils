@@ -14,7 +14,7 @@ class Process extends Command
 
     public function __construct()
     {
-        $processors[] = new MysqlQueryResult;
+        $this->processors[] = new MysqlQueryResult;
 
         parent::__construct();
     }
@@ -34,6 +34,14 @@ class Process extends Command
             $parts = $parser->parse($line);
             foreach ($this->processors as $processor) {
                 $result = $processor->process($parts);
+
+                if ($result) {
+                    echo PHP_EOL;
+                    echo ' -- Begin: HIT ---' . PHP_EOL;
+                    echo $result . PHP_EOL;
+                    echo ' -- End: HIT ---' . PHP_EOL;
+                    echo PHP_EOL;
+                }
             }
 
             echo $line;
