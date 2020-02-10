@@ -13,14 +13,23 @@ class ProcessTest extends TestCase
         $application->add(new Command\Process());
         $command = $application->find('process');
         $commandTester = new CommandTester($command);
+
         $commandTester->execute([
             'file' => 'tests/fixtures/brk-before.txt'
         ]);
-
         $output = $commandTester->getDisplay();
         $this->assertEquals(
             $output,
             file_get_contents('tests/fixtures/brk-after.txt')
+        );
+
+        $commandTester->execute([
+            'file' => 'tests/fixtures/recvfrom-before.txt'
+        ]);
+        $output = $commandTester->getDisplay();
+        $this->assertEquals(
+            $output,
+            file_get_contents('tests/fixtures/recvfrom-after.txt')
         );
     }
 }

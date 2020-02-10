@@ -1,0 +1,14 @@
+close(4)                                = 0
+sendto(3, ".\0\0\0\3SELECT `store_website`.* FROM `store_website`", 50, MSG_DONTWAIT, NULL, 0) = 50
+poll([{fd=3, events=POLLIN|POLLERR|POLLHUP}], 1, 86400000) = 1 ([{fd=3, revents=POLLIN}])
+recvfrom(3, "\1\0\0\1\6T\0\0\2\3def\20magento_2_3_4_ee\rstore_website\rstore_website\nwebsite_id\nwebsite_id\f?\0\5\0\0\0\2#B\0\0\0H\0\0\3\3def\20magento_2_3_4_ee\rstore_w", 126, MSG_DONTWAIT, NULL, NULL) = 126
+poll([{fd=3, events=POLLIN|POLLERR|POLLHUP}], 1, 86400000) = 1 ([{fd=3, revents=POLLIN}])
+recvfrom(3, "ebsite\rstore_website\4code\4code\f!\0`\0\0\0\375\4@\0\0\0H\0\0\4\3def\20magento_2_3_4_ee\rstore_website\rstore_website\4name\4name\f!\0\300\0\0\0\375\0\0\0\0\0T\0\0\5\3def\20magento_2_3_4_ee\rstore_website\rstore_website\nsort_order\nsort_", 189, MSG_DONTWAIT, NULL, NULL) = 189
+poll([{fd=3, events=POLLIN|POLLERR|POLLHUP}], 1, 86400000) = 1 ([{fd=3, revents=POLLIN}])
+recvfrom(3, "order\f?\0\5\0\0\0\2)@\0\0\0`\0\0\6\3def\20magento_2_3_4_ee\rstore_website\rstore_website\20default_group_id\20default_group_id\f?\0\5\0\0\0\2)@\0\0\0T\0\0\7\3def\20magento_2_3_4_ee\rstore_website\rstore_website\nis_default\nis_def", 189, MSG_DONTWAIT, NULL, NULL) = 189
+poll([{fd=3, events=POLLIN|POLLERR|POLLHUP}], 1, 86400000) = 1 ([{fd=3, revents=POLLIN}])
+recvfrom(3, "ault\f?\0\5\0\0\0\2 \0\0\0\0\5\0\0\10\376\0\0\"\0\24\0\0\t\0010\5admin\5Admin\0010\0010\0010\32\0\0\n\0011\4base\fMain Website\0010\0011\0011\5\0\0\v\376\0\0\"\0", 189, MSG_DONTWAIT, NULL, NULL) = 89
+-- Begin -- StraceOutUtils\Processor\MysqlQueryResult
+\1\0\0\1\6T\0\0\2\3def\20magento_2_3_4_ee\rstore_website\rstore_website\nwebsite_id\nwebsite_id\f?\0\5\0\0\0\2#B\0\0\0H\0\0\3\3def\20magento_2_3_4_ee\rstore_website\rstore_website\4code\4code\f!\0`\0\0\0\375\4@\0\0\0H\0\0\4\3def\20magento_2_3_4_ee\rstore_website\rstore_website\4name\4name\f!\0\300\0\0\0\375\0\0\0\0\0T\0\0\5\3def\20magento_2_3_4_ee\rstore_website\rstore_website\nsort_order\nsort_order\f?\0\5\0\0\0\2)@\0\0\0`\0\0\6\3def\20magento_2_3_4_ee\rstore_website\rstore_website\20default_group_id\20default_group_id\f?\0\5\0\0\0\2)@\0\0\0T\0\0\7\3def\20magento_2_3_4_ee\rstore_website\rstore_website\nis_default\nis_default\f?\0\5\0\0\0\2 \0\0\0\0\5\0\0\10\376\0\0\"\0\24\0\0\t\0010\5admin\5Admin\0010\0010\0010\32\0\0\n\0011\4base\fMain Website\0010\0011\0011\5\0\0\v\376\0\0\"\0
+-- End -- StraceOutUtils\Processor\MysqlQueryResult
+sendto(3, "%\0\0\0\3SHOW TABLE STATUS LIKE 'store_group'", 41, MSG_DONTWAIT, NULL, 0) = 41
