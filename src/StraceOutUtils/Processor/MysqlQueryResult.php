@@ -2,12 +2,22 @@
 
 namespace StraceOutUtils\Processor;
 
+use StraceOutUtils\Processor\MysqlQueryResult\Humanizer;
+
 class MysqlQueryResult
 {
     private $isBuffering = false;
 
     private $buffer;
 
+    /**
+     * If the packets are received in hex it may be difficult to parse as it seems
+     *
+     * We'll then need to
+     *
+     * @param  [type] $parts [description]
+     * @return [type]        [description]
+     */
     public function process($parts)
     {
         // We can expect these in the middle of buffering
@@ -22,7 +32,8 @@ class MysqlQueryResult
         }
 
         if ($this->isBuffering) {
-            $return = $this->buffer;
+            $humanizer = new Humanizer($this->buffer);
+            $return = $humanizer->humanize();
 
             $this->isBuffering = false;
             $this->buffer = '';

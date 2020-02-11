@@ -24,12 +24,12 @@ class ProcessTest extends TestCase
         );
 
         $commandTester->execute([
-            'file' => 'tests/fixtures/recvfrom-before.txt'
+            'file' => 'tests/fixtures/recvfrom-x-before.txt'
         ]);
         $output = $commandTester->getDisplay();
         $this->assertEquals(
             $output,
-            file_get_contents('tests/fixtures/recvfrom-after.txt')
+            file_get_contents('tests/fixtures/recvfrom-x-after.txt')
         );
     }
 }
