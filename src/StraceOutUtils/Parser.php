@@ -19,11 +19,6 @@ class Parser
         return $parts;
     }
 
-    /**
-     * [extractCall description]
-     * @param  [type] $line [description]
-     * @return [type]       [description]
-     */
     private function extractCall($line)
     {
         $parts = explode('(', $line);

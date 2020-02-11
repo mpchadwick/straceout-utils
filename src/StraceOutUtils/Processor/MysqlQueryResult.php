@@ -12,14 +12,6 @@ class MysqlQueryResult
 
     private $query;
 
-    /**
-     * If the packets are received in hex it may be difficult to parse as it seems
-     *
-     * We'll then need to
-     *
-     * @param  [type] $parts [description]
-     * @return [type]        [description]
-     */
     public function process($parts)
     {
         // We can expect these in the middle of buffering
