@@ -10,6 +10,8 @@ class MysqlQueryResult
 
     private $buffer;
 
+    private $query;
+
     /**
      * If the packets are received in hex it may be difficult to parse as it seems
      *
@@ -32,8 +34,16 @@ class MysqlQueryResult
         }
 
         if ($this->isBuffering) {
+            $return = '';
+            $return .= $this->query . PHP_EOL;
             $humanizer = new Humanizer($this->buffer);
-            $return = $humanizer->humanize();
+            $return .= $humanizer->humanize();
+
+            if ($parts['call'] === 'sendto') {
+                $this->query = $this->extractQuery($parts['args']);
+            } else {
+                $this->query = '';
+            }
 
             $this->isBuffering = false;
             $this->buffer = '';
@@ -41,7 +51,21 @@ class MysqlQueryResult
             return $return;
         }
 
+        if ($parts['call'] === 'sendto') {
+            $this->query = $this->extractQuery($parts['args']);
+        }
+
         return false;
+    }
+
+    private function extractQuery($args)
+    {
+        $query = $this->extractBuffer($args);
+        $query = str_replace('\\x', '', $query);
+        $query = hex2bin($query);
+        $query = preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $query);
+
+        return $query;
     }
 
     private function extractBuffer($args)
