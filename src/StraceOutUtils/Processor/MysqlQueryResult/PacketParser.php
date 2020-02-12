@@ -9,7 +9,7 @@ use StraceOutUtils\Exception\NotMysqlQueryResultException;
  * Current implementation makes several assumptions that won't always be true
  * Need to fix those at some point
  */
-class Humanizer
+class PacketParser
 {
     /**
      * @see https://dev.mysql.com/doc/internals/en/com-query-response.html#packet-Protocol::ColumnDefinition
@@ -60,7 +60,7 @@ class Humanizer
     /**
      * See: https://dev.mysql.com/doc/internals/en/com-query-response.html
      */
-    public function humanize()
+    public function parse()
     {
         try {
             $this->extractColumnCount();

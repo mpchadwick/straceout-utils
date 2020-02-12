@@ -2,7 +2,7 @@
 
 namespace StraceOutUtils\Processor;
 
-use StraceOutUtils\Processor\MysqlQueryResult\Humanizer;
+use StraceOutUtils\Processor\MysqlQueryResult\PacketParser;
 
 class MysqlQueryResult
 {
@@ -28,8 +28,8 @@ class MysqlQueryResult
         if ($this->isBuffering) {
             $return = '';
             $return .= $this->query . PHP_EOL;
-            $humanizer = new Humanizer($this->buffer);
-            $return .= $humanizer->humanize();
+            $parser = new PacketParser($this->buffer);
+            $return .= $parser->parse();
 
             if ($parts['call'] === 'sendto') {
                 $this->query = $this->extractQuery($parts['args']);

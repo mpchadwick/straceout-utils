@@ -36,6 +36,7 @@ class Process extends Command
         if (!$fp) {
             throw new \Exception('Could not open file');
         }
+
         while (($line = fgets($fp)) !== false) {
             $parts = $parser->parse($line);
             foreach ($this->processors as $processor) {
