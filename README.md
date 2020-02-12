@@ -1,5 +1,7 @@
 # straceout-utils
 
+[![Build Status](https://travis-ci.org/mpchadwick/straceout-utils.svg?branch=master)](https://travis-ci.org/mpchadwick/straceout-utils)
+
 ## What Is it
 
 A set of tools for working with strace out.
