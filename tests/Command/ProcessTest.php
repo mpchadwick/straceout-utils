@@ -50,5 +50,15 @@ class ProcessTest extends TestCase
             $output,
             file_get_contents('tests/fixtures/recvfrom-x-after-3.txt')
         );
+
+        // Test processing query results with no rows
+        $commandTester->execute([
+            'file' => 'tests/fixtures/recvfrom-x-before-4.txt'
+        ]);
+        $output = $commandTester->getDisplay();
+        $this->assertEquals(
+            $output,
+            file_get_contents('tests/fixtures/recvfrom-x-after-4.txt')
+        );
     }
 }

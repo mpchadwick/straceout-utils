@@ -33,7 +33,7 @@ class Humanizer
 
     private $columnDefinitions;
 
-    private $rows;
+    private $rows = [];
 
     private $currentPosition = 0;
 
@@ -62,6 +62,10 @@ class Humanizer
             $this->extractRows();
         } catch (NotMysqlQueryResultException $e) {
             return $this->message;
+        }
+
+        if (sizeof($this->rows) === 0) {
+            return 'Empty set' . PHP_EOL;
         }
 
         $return = '';
