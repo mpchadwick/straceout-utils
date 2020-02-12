@@ -1,0 +1,11 @@
+{
+    "main": "bin/straceout-utils",
+    "directories": ["src"],
+    "finder": [
+        {
+            "name": "*.php",
+            "in": "vendor"
+        }
+    ],
+    "output": "straceout-utils"
+}
