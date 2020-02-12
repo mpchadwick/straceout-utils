@@ -11,10 +11,23 @@ use StraceOutUtils\Exception\NotMysqlQueryResultException;
  */
 class Humanizer
 {
-    // See: https://dev.mysql.com/doc/internals/en/com-query-response.html#packet-Protocol::ColumnDefinition
+    /**
+     * @see https://dev.mysql.com/doc/internals/en/com-query-response.html#packet-Protocol::ColumnDefinition
+     *
+     * > catalog (lenenc_str) -- catalog (always "def")
+     */
     const CATALOG = '03646566';
 
     const EOF_HEADER = 'fe';
+
+    /**
+     * @see https://dev.mysql.com/doc/internals/en/com-query-response.html
+     *
+     * 14.6.4.1.1.3 Text Resultset Row:
+     *
+     * > NULL is sent as 0xfb
+     */
+    const NULL_VALUE = 251;
 
     private $columnCount;
 
@@ -149,6 +162,10 @@ class Humanizer
     {
         $length = hexdec(substr($this->message, $this->currentPosition, 2));
         $this->currentPosition += 2;
+
+        if ($length === self::NULL_VALUE) {
+            return 'NULL';
+        }
 
         $value = substr($this->message, $this->currentPosition, $length * 2);
         $this->currentPosition += ($length * 2);
