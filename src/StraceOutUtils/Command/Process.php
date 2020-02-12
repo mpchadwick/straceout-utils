@@ -37,7 +37,6 @@ class Process extends Command
             throw new \Exception('Could not open file');
         }
         while (($line = fgets($fp)) !== false) {
-            $line = trim($line);
             $parts = $parser->parse($line);
             foreach ($this->processors as $processor) {
                 $result = $processor->process($parts);
@@ -49,7 +48,7 @@ class Process extends Command
                 }
             }
 
-            $output->writeln($line);
+            $output->writeln($parts['line']);
         }
 
         return 0;

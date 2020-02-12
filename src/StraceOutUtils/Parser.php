@@ -15,6 +15,7 @@ class Parser
         $parts = [];
         $parts['call'] = $this->extractCall($line);
         $parts['args'] = $this->extractArgs($line);
+        $parts['line'] = trim($line);
 
         return $parts;
     }
