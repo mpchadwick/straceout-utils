@@ -14,7 +14,7 @@ class Humanizer
     // See: https://dev.mysql.com/doc/internals/en/com-query-response.html#packet-Protocol::ColumnDefinition
     const CATALOG = '03646566';
 
-    const EOF = 'fe00002200';
+    const EOF_HEADER = 'fe';
 
     private $columnCount;
 
@@ -158,7 +158,7 @@ class Humanizer
 
     private function nextPacketIsEof()
     {
-        return substr($this->message, $this->currentPosition + 8, 10) === self::EOF;
+        return substr($this->message, $this->currentPosition + 8, 2) === self::EOF_HEADER;
     }
 
     private function skipEof()
