@@ -60,5 +60,14 @@ class ProcessTest extends TestCase
             $output,
             file_get_contents('tests/fixtures/recvfrom-x-after-4.txt')
         );
+
+        $commandTester->execute([
+            'file' => 'tests/fixtures/recvfrom-x-before-5.txt'
+        ]);
+        $output = $commandTester->getDisplay();
+        $this->assertEquals(
+            $output,
+            file_get_contents('tests/fixtures/recvfrom-x-after-5.txt')
+        );
     }
 }

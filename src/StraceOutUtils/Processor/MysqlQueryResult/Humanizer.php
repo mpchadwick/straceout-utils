@@ -29,6 +29,15 @@ class Humanizer
      */
     const NULL_VALUE = 251;
 
+    /**
+     * @see https://dev.mysql.com/doc/internals/en/integer.html#length-encoded-integer
+     *
+     * > If the value is ≥ 251 and < (216), it is stored as fc + 2-byte integer.
+     * > If the value is ≥ (216) and < (224), it is stored as fd + 3-byte integer.
+     */
+    const LENGTH_ENCODED_INTEGER_TWO_BYTE_FLAG = 252;
+    const LENGTH_ENCODED_INTEGER_THREE_BYTE_FLAG = 253;
+
     private $columnCount;
 
     private $columnDefinitions;
@@ -169,12 +178,43 @@ class Humanizer
 
         if ($length === self::NULL_VALUE) {
             return 'NULL';
+        } else if ($length === self::LENGTH_ENCODED_INTEGER_TWO_BYTE_FLAG) {
+            $length = substr($this->message, $this->currentPosition, 4);
+            $length = $this->reverseMultiByteLength($length);
+            $length = hexdec($length);
+            $this->currentPosition += 4;
+        } else if ($length === self::LENGTH_ENCODED_INTEGER_THREE_BYTE_FLAG) {
+            $length = substr($this->message, $this->currentPosition, 6);
+            $length = $this->reverseMultiByteLength($length);
+            $length = hexdec($length);
+            $this->currentPosition += 6;
         }
 
         $value = substr($this->message, $this->currentPosition, $length * 2);
         $this->currentPosition += ($length * 2);
 
         return hex2bin($value);
+    }
+
+    /**
+     * For some reason MySQL stores multi-byte lengths backwards
+     *
+     * For example:
+     *
+     * fc ae 02
+     *
+     * In this case fc is a flag that the length is in the next two bytes
+     *
+     * ae 02 In decimal is 44546
+     *
+     * However, in testing the value was actually 686 bytes, which should be 02 ae
+     */
+    private function reverseMultiByteLength($length)
+    {
+        $parts = str_split($length, 2);
+        $parts = array_reverse($parts);
+
+        return implode('', $parts);
     }
 
     private function nextPacketIsEof()
