@@ -28,5 +28,5 @@ strace out will include the packets received from MySQL in [Client / Server Prot
 #### Example
 
 ```
-$ traceout-utils process strace-out.txt
+$ straceout-utils process strace-out.txt
 ```
