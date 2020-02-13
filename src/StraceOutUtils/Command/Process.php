@@ -32,9 +32,14 @@ class Process extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $parser = new Parser;
+        $file = $input->getArgument('file');
+        if (!file_exists($file)) {
+            throw new \InvalidArgumentException('Invalid file');
+        }
+
         $fp = fopen($input->getArgument('file'), 'r');
         if (!$fp) {
-            throw new \Exception('Could not open file');
+            throw new \InvalidArgumentException('Could not open file');
         }
 
         while (($line = fgets($fp)) !== false) {

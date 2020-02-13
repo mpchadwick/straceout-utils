@@ -70,4 +70,17 @@ class ProcessTest extends TestCase
             file_get_contents('tests/fixtures/recvfrom-x-after-5.txt')
         );
     }
+
+    public function testExecuteWithWrongFile()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $application = new Application;
+        $application->add(new Command\Process());
+        $command = $application->find('process');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'file' => 'I DONT EXIST'
+        ]);
+        $commandTester->getDisplay();
+    }
 }
