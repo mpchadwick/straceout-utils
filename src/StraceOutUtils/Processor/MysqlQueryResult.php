@@ -3,6 +3,7 @@
 namespace StraceOutUtils\Processor;
 
 use StraceOutUtils\Processor\MysqlQueryResult\PacketParser;
+use StraceOutUtils\Processor\MysqlQueryResult\Formatter;
 
 class MysqlQueryResult
 {
@@ -29,7 +30,10 @@ class MysqlQueryResult
             $return = '';
             $return .= $this->query . PHP_EOL;
             $parser = new PacketParser($this->buffer);
-            $return .= $parser->parse();
+            $parsed = $parser->parse();
+
+            $formatter = new Formatter;
+            $return .= $formatter->format($parsed);
 
             if ($parts['call'] === 'sendto') {
                 $this->query = $this->extractQuery($parts['args']);

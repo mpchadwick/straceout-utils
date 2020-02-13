@@ -62,6 +62,11 @@ class PacketParser
      */
     public function parse()
     {
+        $return = [
+            'message' => '',
+            'rows' => []
+        ];
+
         try {
             $this->extractColumnCount();
             $this->extractColumnDefinitions();
@@ -70,20 +75,11 @@ class PacketParser
             }
             $this->extractRows();
         } catch (NotMysqlQueryResultException $e) {
-            return $this->message;
+            $return['message'] = $this->message;
+            return $return;
         }
 
-        if (sizeof($this->rows) === 0) {
-            return 'Empty set' . PHP_EOL;
-        }
-
-        $return = '';
-        foreach ($this->rows as $i => $values) {
-            $return .= '************* ' . $i . ' *************' . PHP_EOL;
-            foreach ($values as $key => $value) {
-                $return .= $key . ': ' . $value . PHP_EOL;
-            }
-        }
+        $return['rows'] = $this->rows;
 
         return $return;
     }
