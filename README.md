@@ -8,7 +8,7 @@ A set of tools for working with strace out.
 
 ### PHAR
 
-- Download the latest release from GitHub
+- Download the latest [release from GitHub](https://github.com/mpchadwick/straceout-utils/releases)
 
 ### From Source
 
